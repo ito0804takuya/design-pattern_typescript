@@ -1,3 +1,5 @@
+// 募集のエントリー、企業実習のエントリー、説明会のエントリーをしたときに生成されてほしいエントリー、メッセージ、活動記録が異なるはずなので、こういう感じで使えそう。
+
 // 抽象的なFactory
 interface AbstractFactory {
   createProductA(): AbstractProductA; // AbstractProductA を返す createProductA()関数 の実装を強制
