@@ -2,45 +2,48 @@ namespace AbstractFactoryCmapExample {
   interface EntryFactory {
     createEntry(): Entry;
     createMessage(): Message;
-    createActivity(): Activity;
   }
   // 募集情報へのエントリー
   class JobEntryFactory implements EntryFactory {
-    public createEntry(): Entry {
-      return new Entry("job");
+    createEntry(): Entry {
+      return new JobEntry();
     }
-    public createMessage(): Message {
-      return new Message("job");
-    }
-    public createActivity(): Activity {
-      return new Activity("job");
+    createMessage(): Message {
+      return new EntryJobMessage();
     }
   }
   // 説明会へのエントリー
   class CorporationEventEntryFactory implements EntryFactory {
-    public createEntry(): Entry {
-      return new Entry("internship");
+    createEntry(): Entry {
+      return new CorporationEventEntry();
     }
-    public createMessage(): Message {
-      return new Message("internship");
-    }
-    public createActivity(): Activity {
-      return new Activity("internship");
+    createMessage(): Message {
+      return new EntryCorporationEventMessage();
     }
   }
 
-  class Entry  {
-    protected entry_target: string;
-    public constructor(value: string) {
-      this.entry_target = value;
+  interface Entry {
+    entryTarget: string;
+  }
+  class JobEntry implements Entry {
+    entryTarget = "job";
+  }
+  class CorporationEventEntry implements Entry{
+    entryTarget = "session";
+  }
+
+  interface Message {
+    sendMessage(): void;
+  }
+  class EntryJobMessage implements Message {
+    sendMessage(): void {
+      console.log("募集情報へのエントリーがありました。");
     }
-    // ...
   }
-  class Message {
-    // ...
-  }
-  class Activity{
-    // ...
+  class EntryCorporationEventMessage implements Message {
+    sendMessage(): void {
+      console.log("説明会へのエントリーがありました。");
+    }
   }
 
   // <使い方>
@@ -48,7 +51,6 @@ namespace AbstractFactoryCmapExample {
     const factory = new JobEntryFactory();
     const entry = factory.createEntry();
     const message = factory.createMessage();
-    const activity = factory.createActivity();
     // 以降、募集へのエントリーならではのビジネスロジック
   }
 
@@ -56,7 +58,6 @@ namespace AbstractFactoryCmapExample {
     const factory = new CorporationEventEntryFactory();
     const entry = factory.createEntry();
     const message = factory.createMessage();
-    const activity = factory.createActivity();
     // 以降、説明会へのエントリーならではのビジネスロジック
   }
 }
